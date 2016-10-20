@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:padding="2dp">
+
+<ImageView
+    android:id="@+id/imageDocIcon"
+    android:layout_width="25dp"
+    android:layout_height="25dp"
+    android:layout_marginLeft = "0dp"
+    android:layout_marginRight = "3dp"
+    android:layout_marginTop = "8dp"
+    android:layout_marginBottom = "8dp"
+    android:src="@drawable/ic_question_tag" />
+
+<TextView
+    android:id="@+id/tvNote"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight = "1"
+    android:singleLine="true"
+    android:text="Dummy Text"
+    android:textColor="@color/question_itme_text"
+    android:textSize="16sp"
+    android:layout_marginLeft = "4dp"
+    android:layout_marginRight = "4dp"
+    android:layout_marginTop = "4dp"
+    android:layout_marginBottom = "4dp"/>
+
+<TextView
+    android:id = "@+id/timerShow"
+    android:layout_width = "wrap_content"
+    android:layout_height = "wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_toRightOf="@id/tvNote"
+    android:layout_margin="4dp"
+    android:text = "00:00:00"
+    android:textColor="@color/primary"
+    android:textSize="16sp"/>
+</LinearLayout>

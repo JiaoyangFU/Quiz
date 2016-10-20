@@ -16,6 +16,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".QuizMaker"
+            android:label="@string/build_quiz_data"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.quiz.quiz.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".QuizTaker"
+            android:label="@string/quiz_maker"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.quiz.quiz.MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>

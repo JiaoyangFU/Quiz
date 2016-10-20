@@ -12,24 +12,35 @@
         android:text="@string/quiz_system"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="40dp"
+        android:textColor="#ff0000"
+        android:id="@+id/textView"
+        android:layout_above="@+id/quiz_taker_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="68dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:textSize="12dp"
         android:text="@string/quiz_maker"
         android:id="@+id/quiz_maker_button"
-        android:background="#ff0000" />
+        android:textColor="@color/button_text"
+        android:background="@color/primary"
+        android:layout_alignTop="@+id/quiz_taker_button"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/quiz_maker_button"
-        android:text="@string/quiz_maker"
+        android:textSize="12dp"
+        android:text="@string/quiz_taker"
         android:id="@+id/quiz_taker_button"
-        android:background="#ff0000" />
+        android:textColor="@color/button_text"
+        android:background="@color/primary"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
 </RelativeLayout>
