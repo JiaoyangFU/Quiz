@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Quiz</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="quiz_system">Quiz System</string>
+    <string name="quiz_maker">Quiz Maker</string>
+    <string name="quiz_taker">Quiz Taker</string>
+</resources>
