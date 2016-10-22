@@ -9,37 +9,58 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 /**
  * Created by fujiaoyang1 on 10/21/16.
  */
-public class EditorActivity extends Activity {
+public class EditorActivity extends Activity implements OnItemSelectedListener{
 
     private EditText question_edit, opt_a_edit, opt_b_edit, opt_c_edit;
     private String question_text, opt_a_text, opt_b_text, opt_c_text, answer_text;
-    private String action, selection;
+    private String action, selection, time_seleted, time_text;
+    private Spinner spinner;
+    private RadioButton opt_a, opt_b, opt_c;
+    int time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor);
+        spinner = (Spinner) findViewById(R.id.time_spinner);
+        spinner.setOnItemSelectedListener(this);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.time_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter); // Apply the adapter to the spinner
+        ArrayAdapter<String> array_spinner=(ArrayAdapter<String>)spinner.getAdapter();
+
+        opt_a = (RadioButton)findViewById(R.id.option_a);
+        opt_b = (RadioButton)findViewById(R.id.option_b);
+        opt_c = (RadioButton)findViewById(R.id.option_c);
+
         question_edit = (EditText)findViewById(R.id.question_text);
         opt_a_edit = (EditText)findViewById(R.id.option_a_text);
         opt_b_edit = (EditText)findViewById(R.id.option_b_text);
         opt_c_edit = (EditText)findViewById(R.id.option_c_text);
-
+        answer_text = "A";
         Intent intent = getIntent();  //the intent that launch this activity
         Uri uri = intent.getParcelableExtra(QuizMaker.URL_DATA);
 
         if (uri == null) {//add button is pressed and add a new quiz to database
             action = Intent.ACTION_INSERT;
-            setTitle("add");
+            setTitle("add a quiz");
         } else {// item exist already and need to update existed contend and time
             action = Intent.ACTION_EDIT;
-            setTitle("modify");
+            setTitle("modify a quiz");
             selection = QuizData.QUIZ_ID + "=" + uri.getLastPathSegment();
             // retrieve one row in the database
             Cursor cursor = getContentResolver().query(uri, QuizData.ALL_COLUMNS, selection,
@@ -49,17 +70,47 @@ public class EditorActivity extends Activity {
             opt_a_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_A));
             opt_b_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_B));
             opt_c_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_C));
+            answer_text = cursor.getString(cursor.getColumnIndex(QuizData.QUIZ_ANSWER));
+            time_text = cursor.getString(cursor.getColumnIndex(QuizData.TIME));
+
+            switch(answer_text) {
+                case "A":
+                    opt_a.setChecked(true);
+                    break;
+                case "B":
+                    opt_b.setChecked(true);
+                    break;
+                case "C":
+                    opt_c.setChecked(true);
+                    break;
+            }
 
             question_edit.setText(question_text);
             opt_a_edit.setText(opt_a_text);
             opt_b_edit.setText(opt_b_text);
             opt_c_edit.setText(opt_c_text);
+            spinner.setSelection(array_spinner.getPosition(time_text));
 
             question_edit.requestFocus(); //move the cursor to the end of the existing text
-            opt_a_edit.requestFocus();
-            opt_b_edit.requestFocus();
-            opt_c_edit.requestFocus();
+           // opt_a_edit.requestFocus();
+           // opt_b_edit.requestFocus();
+           // opt_c_edit.requestFocus();
         }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+        time_seleted = parent.getItemAtPosition(pos).toString();
+        //Toast.makeText(this, time_seleted, Toast.LENGTH_SHORT).show();
+        //time = Integer.parseInt(time_seleted.substring(0,2));
+        //time_text = String.valueOf(time) + "s";
+        //Toast.makeText(this, time_text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
     @Override
@@ -110,6 +161,7 @@ public class EditorActivity extends Activity {
                     answer_text = "C";
                     break;
         }
+        Toast.makeText(this, answer_text, Toast.LENGTH_SHORT).show();
     }
 
     private void finishEditing(){
@@ -152,6 +204,7 @@ public class EditorActivity extends Activity {
         values.put(QuizData.OPTION_B, opt_b_text);
         values.put(QuizData.OPTION_C, opt_c_text);
         values.put(QuizData.QUIZ_ANSWER, answer_text);
+        values.put(QuizData.TIME, time_seleted);
 
         getContentResolver().update(QuizProvider.CONTENT_URI, values, selection, null);
         Toast.makeText(this, "update a quiz", Toast.LENGTH_SHORT).show();
@@ -165,6 +218,7 @@ public class EditorActivity extends Activity {
         values.put(QuizData.OPTION_B, opt_b_text);
         values.put(QuizData.OPTION_C, opt_c_text);
         values.put(QuizData.QUIZ_ANSWER, answer_text);
+        values.put(QuizData.TIME, time_seleted);
         getContentResolver().insert(QuizProvider.CONTENT_URI, values);
         setResult(RESULT_OK);
     }

@@ -37,7 +37,7 @@ public class QuizData  extends SQLiteOpenHelper {
                     OPTION_C + " TEXT, " +
                     OPTION_D + " TEXT, " +
                     QUIZ_ANSWER + " TEXT, " +
-                    TIME + " INTEGER default 10" +
+                    TIME + " TEXT" +
                     ")";
 
     public QuizData(Context context) {

@@ -13,4 +13,12 @@
 
     <string name="action_delete">delete</string>
     <string name="hint_note"> please input question content</string>
+
+    <string-array name="time_array">
+        <item>10s </item>
+        <item>15s</item>
+        <item>20s</item>
+        <item>25s</item>
+        <item>30s</item>
+    </string-array>
 </resources>
