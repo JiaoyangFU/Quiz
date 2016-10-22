@@ -6,6 +6,7 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * Created by fujiaoyang1 on 10/21/16.
@@ -13,7 +14,7 @@ import android.net.Uri;
 public class QuizProvider extends ContentProvider {
     private static final String AUTHORITY = "com.quiz.quiz.provide_quiz"; //avoid conflicts with other providers
     private static final String BASE_PATH = "quiz";  // table name
-
+    private static final String TAG = "**QuizProvider**";
     // the URI is used to determine which table to use, CONTENT_URI points to notes table
     // identify the content provider
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH );
@@ -42,19 +43,21 @@ public class QuizProvider extends ContentProvider {
         return null;
     }
 
+
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
+    public Cursor query (Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         switch (uriMatcher.match(uri)) {
             case 1:
-                selection = null;
+                Log.d(TAG, "selection fails  " + uri);
                 break;
             case 2:
                 selection = QuizData.QUIZ_ID + "=" + uri.getLastPathSegment();
+                Log.d(TAG, "selection works  " + uri);
                 break;
         }
         return database.query(QuizData.TABLE_QUIZ, QuizData.ALL_COLUMNS,
-                selection, selectionArgs, null, null,  sortOrder);
+                selection, selectionArgs, null, null, sortOrder);
     }
 
     @Override
@@ -76,5 +79,4 @@ public class QuizProvider extends ContentProvider {
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         return database.update(QuizData.TABLE_QUIZ, values, selection, selectionArgs);
     }
-
 }

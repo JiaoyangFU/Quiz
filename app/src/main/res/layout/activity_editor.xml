@@ -45,8 +45,7 @@
                     android:onClick="onRadioButtonClicked"
                     android:layout_toRightOf="@+id/option_a"
                     android:id = "@+id/option_a_text"
-                    android:hint="choice text"
-                    android:singleLine="true"/>
+                    android:hint="choice text" />
 
                 <RadioButton android:id="@+id/option_b"
                     android:layout_width="wrap_content"
@@ -60,8 +59,7 @@
                     android:layout_toRightOf="@+id/option_b"
                     android:layout_alignBaseline="@+id/option_b"
                     android:id = "@+id/option_b_text"
-                    android:hint="choice text"
-                    android:singleLine="true"/>
+                    android:hint="choice text" />
 
                 <RadioButton android:id="@+id/option_c"
                     android:layout_width="wrap_content"
@@ -75,8 +73,7 @@
                     android:layout_toRightOf="@+id/option_c"
                     android:layout_alignBaseline="@+id/option_c"
                     android:id = "@+id/option_c_text"
-                    android:hint="choice text"
-                    android:singleLine="true"/>
+                    android:hint="choice text" />
             </RadioGroup>
         </RelativeLayout>
     </ScrollView>

@@ -103,10 +103,6 @@ public class EditorActivity extends Activity implements OnItemSelectedListener{
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         time_seleted = parent.getItemAtPosition(pos).toString();
-        //Toast.makeText(this, time_seleted, Toast.LENGTH_SHORT).show();
-        //time = Integer.parseInt(time_seleted.substring(0,2));
-        //time_text = String.valueOf(time) + "s";
-        //Toast.makeText(this, time_text, Toast.LENGTH_SHORT).show();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
