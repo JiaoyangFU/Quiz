@@ -13,10 +13,10 @@ android:padding="2dp">
     android:layout_marginRight = "3dp"
     android:layout_marginTop = "8dp"
     android:layout_marginBottom = "8dp"
-    android:src="@drawable/ic_question_tag" />
+    android:src="@drawable/ic_action_tag" />
 
 <TextView
-    android:id="@+id/tvNote"
+    android:id="@+id/question_note"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_weight = "1"
@@ -30,13 +30,13 @@ android:padding="2dp">
     android:layout_marginBottom = "4dp"/>
 
 <TextView
-    android:id = "@+id/timerShow"
+    android:id = "@+id/time_show"
     android:layout_width = "wrap_content"
     android:layout_height = "wrap_content"
     android:layout_alignParentRight="true"
-    android:layout_toRightOf="@id/tvNote"
+    android:layout_toRightOf="@id/question_note"
     android:layout_margin="4dp"
-    android:text = "00:00:00"
-    android:textColor="@color/primary"
+    android:text = "0"
+    android:textColor="@color/question_itme_text"
     android:textSize="16sp"/>
 </LinearLayout>

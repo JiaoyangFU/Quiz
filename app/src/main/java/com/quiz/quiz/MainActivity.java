@@ -13,21 +13,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button qmBtn = (Button) findViewById(R.id.quiz_maker_button);
-        qmBtn.setOnClickListener(new View.OnClickListener() {
+        Button quiz_maker_button = (Button) findViewById(R.id.quiz_maker_button);
+        quiz_maker_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, QuizMaker.class);
-                // intent.putExtra("userType", "qm");
                 startActivity(intent);
             }
         });
-        Button qtBtn = (Button) findViewById(R.id.quiz_taker_button);
-        qtBtn.setOnClickListener(new View.OnClickListener() {
+        Button quiz_taker_button = (Button) findViewById(R.id.quiz_taker_button);
+        quiz_taker_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, QuizTaker.class);
-                // intent.putExtra("userType", "qt");
                 startActivity(intent);
             }
         });
