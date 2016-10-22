@@ -1,21 +1,22 @@
 package com.quiz.quiz;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Created by fujiaoyang1 on 10/19/16.
@@ -62,10 +63,6 @@ public class QuizMaker extends Activity implements LoaderManager.LoaderCallbacks
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_create_sample:
-                insertSampleQuiz();
-                break;
-
             case R.id.action_delete_all:
                 deleteAllQuiz();
                 break;
@@ -96,24 +93,26 @@ public class QuizMaker extends Activity implements LoaderManager.LoaderCallbacks
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
     }
-
-    private void insertSampleQuiz() {
-        insertQuiz("New note one");
-        insertQuiz("This is a multiline cote \n note content");
-        insertQuiz("This is a long note. This is a long note. This is a long note. " +
-                "This is a long note. This is a long note. ");
-        restartLoader();  // show refreshed database
-    }
-
-    private void insertQuiz(String noteText) {
-        ContentValues values = new ContentValues();
-        values.put(QuizData.QUIZ_TEXT, noteText);
-        Uri noteUri = getContentResolver().insert(QuizProvider.CONTENT_URI, values);
-        Log.d("Tab0", "Inserted note " + noteUri.getLastPathSegment());
-    }
-
     void deleteAllQuiz(){
+        DialogInterface.OnClickListener dialogClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int button) {
+                        if (button == DialogInterface.BUTTON_POSITIVE) {
+                            getContentResolver().delete(
+                                    QuizProvider.CONTENT_URI, null, null
+                            );
+                            restartLoader();  // show refreshed database
+                            Toast.makeText(QuizMaker.this,"Deleted All Quizs",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure ?")
+                .setPositiveButton(getString(android.R.string.yes), dialogClickListener)
+                .setNegativeButton(getString(android.R.string.no), dialogClickListener)
+                .show();
     }
 
     void quizAdd(){
