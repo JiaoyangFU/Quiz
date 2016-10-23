@@ -6,7 +6,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * Created by fujiaoyang1 on 10/21/16.
@@ -49,11 +48,11 @@ public class QuizProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
         switch (uriMatcher.match(uri)) {
             case 1:
-                Log.d(TAG, "selection fails  " + uri);
+                // Log.d(TAG, "selection fails  " + uri);
                 break;
             case 2:
                 selection = QuizData.QUIZ_ID + "=" + uri.getLastPathSegment();
-                Log.d(TAG, "selection works  " + uri);
+                // Log.d(TAG, "selection works  " + uri);
                 break;
         }
         return database.query(QuizData.TABLE_QUIZ, QuizData.ALL_COLUMNS,

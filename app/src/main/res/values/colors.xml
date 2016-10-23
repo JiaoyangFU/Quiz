@@ -7,6 +7,8 @@
     <color name = "question_timerShow">#888</color>
     <color name = "button_text">#FFFFFF</color>
     <color name = "tab_unfocused">#FFFFFF</color>
-    <color name = "tab_focused">#000000</color>
+    <color name = "general">#000000</color>
+    <color name = "incorrect">#f44336</color>
+    <color name = "correct">#00FF00</color>
 
 </resources>
