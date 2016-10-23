@@ -1,6 +1,7 @@
 package com.quiz.quiz;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -30,7 +31,7 @@ public class QuizTaker extends Activity {
     private boolean isSelected, hasTime;
     ArrayList<Integer> list_random_id = new ArrayList<Integer>();
     private static final String TAG = "** QuizTaker ** ";
-
+    private static final int EDITOR_REQUEST_CODE = 20;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +80,19 @@ public class QuizTaker extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK){
+            Log.d(TAG, "result:   " + data.getStringExtra("start_new_round"));
+            if (data.getStringExtra("start_new_round").equals("1")) {
+                setNewRound();
+            }
+            else {
+                finish();
+            }
+        }
+    }
+
     private void setNewRound() {
         time = 0;
         score = 0;
@@ -92,7 +106,9 @@ public class QuizTaker extends Activity {
 
     private void getNextQuiz(){
         if (quizCnt-- == 0) {
-            setNewRound();
+            Intent intent = new Intent(this, QuizFinishActivity.class);
+            intent.putExtra("score_quiz_taker", score);
+            startActivityForResult(intent, EDITOR_REQUEST_CODE);
         }
         isSelected = false;
         hasTime = true;

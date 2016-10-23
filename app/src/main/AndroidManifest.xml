@@ -49,6 +49,16 @@
         </activity>
 
 
+        <activity
+            android:name=".QuizFinishActivity"
+            android:label="@string/quiz_maker"
+            android:parentActivityName=".QuizTaker" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.quiz.quiz.MainActivity" />
+        </activity>
+
+
     </application>
 
 </manifest>
