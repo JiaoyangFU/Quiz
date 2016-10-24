@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,7 @@ public class QuizTaker extends Activity {
         Cursor cursor = getContentResolver().query(QuizProvider.CONTENT_URI, null, null,
                 null, null);
         quizTotalCnt = cursor.getCount();
-
+        Log.d(TAG, "quizTotalCnt:   " + quizTotalCnt);
         for (int i=1; i<= quizTotalCnt; i++) {
             list_random_id.add(new Integer(i)); // used to get unique random number
         }

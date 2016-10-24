@@ -2,12 +2,16 @@ package com.quiz.quiz;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
+    private static final String TAG = "** MainActivity ** ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +29,19 @@ public class MainActivity extends Activity {
         quiz_taker_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, QuizTaker.class);
-                startActivity(intent);
+
+
+                Cursor cursor = getContentResolver().query(QuizProvider.CONTENT_URI, null, null,
+                        null, null);
+                int quizTotalCnt = cursor.getCount();
+                Log.d(TAG, "quizTotalCnt:   " + quizTotalCnt);
+                if (quizTotalCnt < 5) {
+                    Toast.makeText(MainActivity.this, "Not enough quiz", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(MainActivity.this, QuizTaker.class);
+                    startActivity(intent);
+                }
             }
         });
     }
