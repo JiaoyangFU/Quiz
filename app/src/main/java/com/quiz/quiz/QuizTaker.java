@@ -48,9 +48,12 @@ public class QuizTaker extends Activity {
         Cursor cursor = getContentResolver().query(QuizProvider.CONTENT_URI, null, null,
                 null, null);
         quizTotalCnt = cursor.getCount();
-        Log.d(TAG, "quizTotalCnt:   " + quizTotalCnt);
-        for (int i=1; i<= quizTotalCnt; i++) {
-            list_random_id.add(new Integer(i)); // used to get unique random number
+
+        if(cursor.moveToFirst()) {
+            do{
+                list_random_id.add(new Integer(cursor.getInt(cursor.getColumnIndex(QuizData.QUIZ_ID))));
+                Log.d(TAG, "ID:   " + cursor.getInt(cursor.getColumnIndex(QuizData.QUIZ_ID)));
+            }while(cursor.moveToNext());
         }
         setNewRound();
     }
@@ -83,7 +86,6 @@ public class QuizTaker extends Activity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == EDITOR_REQUEST_CODE ){
-            //Log.d(TAG, "result:   " + data.getStringExtra("start_new_round"));
             if (data.getStringExtra("start_new_round").equals("1") && resultCode == RESULT_OK) {
                 //Log.d(TAG, "new round:   " + "1");
                 setNewRound();
@@ -126,7 +128,6 @@ public class QuizTaker extends Activity {
 
 
         setTitle("Score: " + score + "/" + 5 + "   NO." + (5 - quizCnt));
-        //Log.d(TAG, "random id is:   " + id)
         int id = list_random_id.get(quizCnt);
         //Log.d(TAG, "random id is:   " + id);
         String selection = QuizData.QUIZ_ID + "=" + Integer.toString(id);
@@ -134,9 +135,12 @@ public class QuizTaker extends Activity {
         // retrieve one row in the database
         Cursor cursor = getContentResolver().query(QuizProvider.CONTENT_URI, QuizData.ALL_COLUMNS, selection,
                 null, null);
-        cursor.moveToFirst();
-        question_text = cursor.getString(cursor.getColumnIndex(QuizData.QUIZ_TEXT));
 
+        if (cursor == null || !cursor.moveToFirst()){
+            finish();
+            return;
+        }
+        question_text = cursor.getString(cursor.getColumnIndex(QuizData.QUIZ_TEXT));
         opt_a_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_A));
         opt_b_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_B));
         opt_c_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_C));

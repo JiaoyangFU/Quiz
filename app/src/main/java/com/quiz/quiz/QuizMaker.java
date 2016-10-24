@@ -99,8 +99,9 @@ public class QuizMaker extends Activity implements LoaderManager.LoaderCallbacks
                     @Override
                     public void onClick(DialogInterface dialog, int button) {
                         if (button == DialogInterface.BUTTON_POSITIVE) {
+                            String selection = QuizData.TABLE_QUIZ + "=" + QuizData.TABLE_QUIZ;
                             getContentResolver().delete(
-                                    QuizProvider.CONTENT_URI, null, null
+                                    QuizProvider.CONTENT_URI, selection, null
                             );
                             restartLoader();  // show refreshed database
                             Toast.makeText(QuizMaker.this,"Deleted All Quizs",Toast.LENGTH_SHORT).show();
