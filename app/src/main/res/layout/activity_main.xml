@@ -8,16 +8,14 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
-    <TextView
-        android:text="@string/quiz_system"
+    <ImageView
+        android:id="@+id/mainImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:textColor="#ff0000"
-        android:id="@+id/textView"
-        android:layout_above="@+id/quiz_taker_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="68dp" />
+        android:src="@drawable/quiz"
+        android:layout_marginTop="59dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -27,9 +25,9 @@
         android:id="@+id/quiz_maker_button"
         android:textColor="@color/button_text"
         android:background="@color/primary"
-        android:layout_alignTop="@+id/quiz_taker_button"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView" />
+        android:layout_marginTop="63dp"
+        android:layout_below="@+id/mainImageView"
+        android:layout_alignStart="@+id/mainImageView" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,8 +37,9 @@
         android:id="@+id/quiz_taker_button"
         android:textColor="@color/button_text"
         android:background="@color/primary"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignTop="@+id/quiz_maker_button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="70dp" />
+        android:layout_alignTop="@+id/quiz_maker_button" />
 
 </RelativeLayout>

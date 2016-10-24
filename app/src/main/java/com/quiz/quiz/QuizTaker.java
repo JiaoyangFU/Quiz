@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,12 +81,14 @@ public class QuizTaker extends Activity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == EDITOR_REQUEST_CODE && resultCode == RESULT_OK){
-            Log.d(TAG, "result:   " + data.getStringExtra("start_new_round"));
-            if (data.getStringExtra("start_new_round").equals("1")) {
+        if (requestCode == EDITOR_REQUEST_CODE ){
+            //Log.d(TAG, "result:   " + data.getStringExtra("start_new_round"));
+            if (data.getStringExtra("start_new_round").equals("1") && resultCode == RESULT_OK) {
+                //Log.d(TAG, "new round:   " + "1");
                 setNewRound();
             }
             else {
+                //Log.d(TAG, "on Press Back :   " + "0");
                 finish();
             }
         }
@@ -106,9 +107,11 @@ public class QuizTaker extends Activity {
 
     private void getNextQuiz(){
         if (quizCnt-- == 0) {
+            super.onResume();
             Intent intent = new Intent(this, QuizFinishActivity.class);
             intent.putExtra("score_quiz_taker", score);
             startActivityForResult(intent, EDITOR_REQUEST_CODE);
+            return;
         }
         isSelected = false;
         hasTime = true;
@@ -121,11 +124,12 @@ public class QuizTaker extends Activity {
         opt_c_btn.setChecked(false);
 
 
-        setTitle("score: " + score + "/" + 5 + "   NO." + (5 - quizCnt));
+        setTitle("Score: " + score + "/" + 5 + "   NO." + (5 - quizCnt));
+        //Log.d(TAG, "random id is:   " + id)
         int id = list_random_id.get(quizCnt);
-
+        //Log.d(TAG, "random id is:   " + id);
         String selection = QuizData.QUIZ_ID + "=" + Integer.toString(id);
-        Log.d(TAG, "random id is:   " + id);
+
         // retrieve one row in the database
         Cursor cursor = getContentResolver().query(QuizProvider.CONTENT_URI, QuizData.ALL_COLUMNS, selection,
                 null, null);
@@ -136,8 +140,8 @@ public class QuizTaker extends Activity {
         opt_b_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_B));
         opt_c_text = cursor.getString(cursor.getColumnIndex(QuizData.OPTION_C));
         correct_answer = cursor.getString(cursor.getColumnIndex(QuizData.QUIZ_ANSWER));
-        Log.d(TAG, "correct answer is:   " + correct_answer);
-        Log.d(TAG, "origin isSelected:   " + isSelected);
+        //Log.d(TAG, "correct answer is:   " + correct_answer);
+        //Log.d(TAG, "origin isSelected:   " + isSelected);
 
         String time_text = cursor.getString(cursor.getColumnIndex(QuizData.TIME));
         time = Integer.parseInt(time_text.substring(0, 2));
@@ -156,7 +160,7 @@ public class QuizTaker extends Activity {
             public void onFinish() {
                 hasTime = false;
                 time_view.setText("remain time" + " " + 0);
-                loseScore(); // select an incorrect answer and time runs up
+                if(!isSelected)loseScore();
             }
         }.start();
     }
@@ -205,8 +209,8 @@ public class QuizTaker extends Activity {
                     selected_answer = "C";
                 break;
         }
-        Log.d(TAG, "select answer:   " + selected_answer);
-        Log.d(TAG, "radio button isSelected:   " + isSelected);
+        //Log.d(TAG, "select answer:   " + selected_answer);
+        //Log.d(TAG, "radio button isSelected:   " + isSelected);
         if (!isSelected && hasTime) {
             if (selected_answer.equals(correct_answer)) {
                 score++;
